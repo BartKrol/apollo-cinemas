@@ -1,10 +1,12 @@
+const cinemas = require('./api/cinemas')
+
 const resolveFunctions = {
   Query: {
     cinemas() {
-      return [{
-        id: 1,
-        name: 'test'
-      }]
+      return cinemas.getList()
+    },
+    cinema(root, args) {
+      return cinemas.get(args.id)
     },
   }
 }

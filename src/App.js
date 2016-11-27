@@ -1,10 +1,24 @@
-import React, { Component } from 'react';
-import './App.css';
+import React from 'react'
+import './App.css'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 
-class App extends Component {
-  render() {
-    return <div>Hello world</div>
+const query = gql`
+  query getCinemas {
+    cinemas {
+      name
+    }
   }
+`
+
+const withData = graphql(query)
+
+function App({ data }){
+  if (data.loading) {
+    return <div>Loading...</div>
+  }
+
+  return <div>{ JSON.stringify(data.cinemas) }</div>
 }
 
-export default App;
+export default withData(App)

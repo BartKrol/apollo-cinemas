@@ -21,7 +21,7 @@ const schemaString = `
 
   type Query {
     cinemas: [Cinema]
-    cinema: Cinema
+    cinema(id: Int!): Cinema
   }
 
   schema {
