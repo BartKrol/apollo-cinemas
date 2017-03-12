@@ -1,31 +1,61 @@
 const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools')
+const faker = require('faker')
 const resolvers = require('./resolvers')
 
 const schemaString = `
   type Cinema {
-    id: Int!
+    id: ID!
     name: String
     movies: [Movie]
   }
 
   type Movie {
-    id: Int!
+    id: ID!
     title: String
-    cast: [Actor]
+    poster: String
+    overview: String
+    cast(limit: Int): [Cast]
+    comments: [Comment]
+  }
+
+  type Cast {
+    id: ID!
+    character: String
+    actor: Actor
   }
 
   type Actor {
-    id: Int!
-    name: String
+    id: ID!
+    name: String,
+    photo: String,
+    age: Int
+  }
+
+  type Comment {
+    id: ID!
+    content: String
+  }
+
+  type Mutation {
+    submitComment(movieId: ID!, commentContent: String!): Comment
   }
 
   type Query {
     cinemas: [Cinema]
-    cinema(id: Int!): Cinema
+    cinema(id: ID!): Cinema
+    movies: [Movie]
+    movie(id: ID!): Movie,
+    actor(id: ID!): Actor
+  }
+
+  type Subscription {
+    commentAdded: Comment
   }
 
   schema {
-    query: Query
+    query: Query,
+    mutation: Mutation,
+    subscription: Subscription
   }
   `;
 
@@ -34,6 +64,13 @@ const schema = makeExecutableSchema({
   resolvers,
 })
 
-// addMockFunctionsToSchema({ schema })
+if (process.env.MOCK) { 
+  addMockFunctionsToSchema({
+    schema,
+    mocks: {
+      String: () => faker.random.words(),
+    }
+  })
+}
 
 module.exports = schema

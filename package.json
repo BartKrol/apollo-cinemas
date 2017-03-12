@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm start:server && npm start:frontend",
+    "start": "npm run start:server",
     "start:server": "node server/index.js",
     "start:client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:3005/",
   "author": "Bartosz Krol",
   "license": "ISC",
   "dependencies": {
@@ -19,14 +20,25 @@
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "express": "^4.14.0",
+    "faker": "^3.1.0",
     "graphql": "^0.8.2",
+    "graphql-subscriptions": "^0.2.2",
+    "install": "^0.8.2",
+    "jsonfile": "^2.4.0",
+    "material-ui": "^0.16.4",
+    "npm": "^4.0.3",
     "react": "^15.4.1",
+    "react-addons-update": "^15.4.1",
     "react-apollo": "^0.6.0",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
+    "react-router": "^3.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "subscriptions-transport-ws": "^0.3.1",
     "superagent": "^3.0.0",
-    "superagent-bluebird-promise": "^4.1.0"
+    "superagent-bluebird-promise": "^4.1.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "react-scripts": "0.7.0"
