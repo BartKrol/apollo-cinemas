@@ -5,11 +5,10 @@ import { Link } from 'react-router'
 import ActorInfo from './ActorInfo'
 
 export default function MovieCard({ id, title, poster, cast }) {
+  const link = `/movie/${id}`
   const actors = take(cast, 3).map(({ actor, character }, index) => {
     return <ActorInfo key={ index } role={ character } actor={ actor } />
   })
-
-  const link = `/movie/${id}`
 
   const actorsLine = <div style={ { marginTop: 20 } }>
       { actors }
@@ -22,7 +21,7 @@ export default function MovieCard({ id, title, poster, cast }) {
         <img src={ poster } style={ { maxWidth: 370 } }/>
       </CardMedia>
     </Link>
-    { actorsLine }
+  { actorsLine }
   </Card>
 }
 

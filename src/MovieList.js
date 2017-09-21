@@ -26,7 +26,7 @@ const withData = graphql(query)
 
 function MovieList({ data }){
   if (data.loading) {
-    return <CircularProgress />
+    return <CircularProgress style={{ margin: 'auto', display: 'block' }}/>
   }
 
   const list = data.movies.map(movie => <MovieCard

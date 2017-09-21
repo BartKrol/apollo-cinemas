@@ -1,31 +1,21 @@
-const cinemas = require('./api/cinemas')
 const movies = require('./api/movies')
-const actor = require('./api/actor')
-const { take } = require('lodash')
+const credits = require('./api/credits')
+const { take, pick } = require('lodash')
 const uuid = require('uuid')
 const { pubsub } = require('./subscriptions')
 
 const comments = [
-  { id: uuid.v4(), content: "Genialny film!" },
-  { id: uuid.v4(), content: "Kowalski to świetny bohater!" }
+  { id: uuid.v4(), content: "Great ending to an awesome trilogy!" },
+  { id: uuid.v4(), content: "Finally a Wolverine movie we deserve!" }
 ]
 
 const resolveFunctions = {
   Query: {
-    cinemas() {
-      return cinemas.getList()
-    },
-    cinema(root, args) {
-      return cinemas.get(args.id)
-    },
     movies() {
       return movies.getList()
     },
     movie(root, args) {
       return movies.get(args.id)
-    },
-    actor(root, args) {
-      return actor.get(args.id)
     }
   },
   Movie: {
@@ -33,20 +23,24 @@ const resolveFunctions = {
       return `https://image.tmdb.org/t/p/w370_and_h556_bestv2${root.poster_path}`
     },
     cast(root, args) {
-      const cast = root.credits.cast
-
-      if (args.limit) {
-        return take(cast, args.limit)
-      }
-      return cast
+      return credits.get(root.id)
+        .then(({ cast }) => {
+          if (args.limit) {
+            return take(cast, args.limit)
+          }
+          return cast
+        })
     },
     comments(root) {
       return comments.reverse()
     }
   },
   Cast: {
+    id(root){
+      return root.credit_id
+    },
     actor(root) {
-      return actor.get(root.id).catch(() => null)
+      return root
     }
   },
   Actor: {

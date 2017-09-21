@@ -27,8 +27,7 @@ const schemaString = `
   type Actor {
     id: ID!
     name: String,
-    photo: String,
-    age: Int
+    photo: String
   }
 
   type Comment {

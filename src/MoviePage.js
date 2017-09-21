@@ -81,10 +81,10 @@ class MoviePage extends React.Component {
             value={ this.state.newComment }
             onChange={ updateInput }
             type="text"
-            placeholder="Twój komentarz"
+            placeholder="Your comment"
           />
           <RaisedButton style={ { marginLeft: 20 } } type="submit">
-            Wyślij
+            Send
           </RaisedButton>
         </form>
       </div>
